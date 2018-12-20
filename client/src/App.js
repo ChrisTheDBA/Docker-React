@@ -10,7 +10,8 @@ class App extends Component {
       {name: 'Chris', age: 52},
       {name: 'Paula', age: 54},
       {name: 'Tracy', age: 48}
-    ]
+    ],
+    showPersons: false
   }
   
   // constructor() {
@@ -66,7 +67,20 @@ class App extends Component {
     })
   }
 
+  togglePersonHandler = () => {
+    const doesShow = this.state.showPersons;
+    this.setState( {showPersons: ! doesShow});
+  }
+
   render() {
+const style = {
+  backgroundColor: 'white',
+  font: 'inherit',
+  border: '1px solid blue',
+  padding: '8px',
+  cursor: 'pointer'
+}
+
     return (
       <div className="App">
         <header className="App-header">
@@ -78,25 +92,31 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <p>Second Line</p>
-        <button onClick={() => this.switchNameHandler('Christopher!')}>Switch Name</button>
-        <Person 
-          name={this.state.persons[0].name} 
-          age={this.state.persons[0].age} 
-        />
-        <Person 
-          name={this.state.persons[1].name} 
-          age={this.state.persons[1].age} 
-          click={this.switchNameHandler.bind(this, 'Chris!')}
-          changed={this.nameChangedHandler}
-          >
-          My Hobbies: Gardening
-        </Person>
-        <Person 
-          name={this.state.persons[2].name} 
-          age={this.state.persons[2].age} 
-        />
+        <button 
+        style={style}
+        onClick={() => this.togglePersonHandler()}>Toggle People</button>
+        { this.state.showPersons ?         
+          <div>
+              <Person 
+                name={this.state.persons[0].name} 
+                age={this.state.persons[0].age} 
+              />        
+              <Person 
+                name={this.state.persons[1].name} 
+                age={this.state.persons[1].age} 
+                click={this.switchNameHandler.bind(this, 'Chris!')}
+                changed={this.nameChangedHandler}
+                >
+                My Hobbies: Gardening
+              </Person>
+              <Person 
+                name={this.state.persons[2].name} 
+                age={this.state.persons[2].age} 
+              />
+            </div> : null
+        }
         <p>{this.state.message || 'No message'}</p>
-      </div>
+      </div> 
     );
   }
 }
